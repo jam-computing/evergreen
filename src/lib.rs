@@ -1,6 +1,6 @@
 // The app should go in here
 
-use yew::{ function_component, Html, html };
+use yew::{function_component, html, Html};
 
 pub fn render() {
     yew::Renderer::<App>::new().render();

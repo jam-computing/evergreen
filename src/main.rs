@@ -1,6 +1,6 @@
-pub mod lib;
+use crate::web::prelude::*;
+pub mod web;
 
 fn main() {
-    crate::lib::render();
+    yew::Renderer::<app::App>::new().render();
 }
-
