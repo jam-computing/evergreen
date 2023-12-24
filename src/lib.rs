@@ -13,7 +13,6 @@ pub const PATH: &str = "tree.json";
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Tree {   
     pub name: String,
-    pub leds: Vec<Colour>,
     pub locations: Vec<Point>
 }
 
@@ -21,7 +20,6 @@ impl Tree {
     pub fn new() -> Tree {
         Tree {
             name: "tree".into(),
-            leds: Vec::new(),
             locations: Vec::new()
         }
     }
@@ -84,5 +82,3 @@ impl Animation {
         Some(animation)
     }
 }
-
-
