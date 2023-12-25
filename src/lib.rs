@@ -1,4 +1,6 @@
 use std::fs;
+
+// Using serde for json serialization 
 use serde::{ Serialize, Deserialize };
 
 // I have no idea where this code should go?
@@ -10,8 +12,9 @@ pub const PATH: &str = "tree.json";
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Tree {   
-    name: String,
-    leds: Vec<Colour>,
+    pub name: String,
+    pub leds: Vec<Colour>,
+    pub locations: Vec<Point>
 }
 
 impl Tree {
@@ -19,6 +22,7 @@ impl Tree {
         Tree {
             name: "tree".into(),
             leds: Vec::new(),
+            locations: Vec::new()
         }
     }
 
@@ -28,8 +32,8 @@ impl Tree {
         Ok(())
     }
 
-    pub fn from_file(path: &str) -> Option<Tree> {
-        let file = fs::read_to_string(PATH).unwrap();
+    pub fn from_file(path: Option<&str>) -> Option<Tree> {
+        let file = fs::read_to_string(path.unwrap_or(PATH)).unwrap();
 
         if file == "" {
             return None
@@ -42,9 +46,16 @@ impl Tree {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Colour {
-    red: u8,
-    green: u8,
-    blue: u8
+    pub red: u8,
+    pub green: u8,
+    pub blue: u8
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Point {
+    pub x: isize,
+    pub y: isize,
+    pub z: isize
 }
 
 
@@ -56,7 +67,7 @@ pub struct Animation {
 }
 
 impl Animation {
-    fn new() -> Animation {
+    pub fn new() -> Animation {
         Animation {
             name: "default".into(),
             len: 0,
@@ -64,8 +75,8 @@ impl Animation {
         }
     }
 
-    fn from_file(path: &str) -> Option<Animation> {
-        let file = fs::read_to_string(PATH).unwrap();
+    pub fn from_file(path: &str) -> Option<Animation> {
+        let file = fs::read_to_string(path).unwrap();
         if file == "" {
             return None
         }
