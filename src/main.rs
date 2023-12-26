@@ -1,4 +1,5 @@
 use crate::web::prelude::*;
+pub mod tree;
 pub mod web;
 
 fn main() {
