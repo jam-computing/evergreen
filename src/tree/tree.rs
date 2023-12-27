@@ -30,6 +30,5 @@ impl Tree {
         }
 
         Some(serde_json::from_str(file.as_str()).unwrap())
-
     }
 }
