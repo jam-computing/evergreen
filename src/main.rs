@@ -3,19 +3,9 @@ pub mod tree;
 
 fn main() {
 
-    let p: Playlist = Playlist {
-        queue: Vec::new(),
-        current: 0,
-    };
+    let p : Playlist = Playlist::new();
 
-    match p.write() {
-        Ok(_) => {
-            return;
-        }
-        Err(err) => {
-            println!("Err: {}", err);
-            return;
-        }
-    }
+    println!("{}", p.get_selected().unwrap().name);
+    
     // yew::Renderer::<app::App>::new().render();
 }
