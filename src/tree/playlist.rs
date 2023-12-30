@@ -32,19 +32,24 @@ impl Playlist {
         Ok(())
     }
 
-    pub fn play(&mut self) {
-
-    }
-
-    pub fn pause(&mut self) {
-
-    }
+    // Do we even need these methods?
+    // Probably handled by web
+    pub fn play(&mut self) {}
+    pub fn pause(&mut self) {}
 
     pub fn next(&mut self) {
-
+        self.current += 1;
     }
 
     pub fn previous(&mut self) {
+        self.current -= 1;
+    }
 
+    pub fn add(&mut self, a: Animation) {
+        self.queue.push(a);
+    }
+
+    pub fn remove(&mut self, i: usize) {
+        self.queue.remove(i);
     }
 }
