@@ -1,0 +1,53 @@
+use std::cell::RefCell;
+use std::rc::Rc;
+use crate::tree::{playlist::Playlist, animation::Animation};
+use yew::{function_component, html, Html, Callback, Properties };
+
+#[function_component(App)]
+pub fn app() -> Html {
+
+    let p: Rc<RefCell<Playlist>> = Rc::new(RefCell::new(Playlist::new()));
+
+    html! {
+        <div>
+            <button onclick={
+                let p = Rc::clone(&p);
+                Callback::from(move |_| {
+                    p.borrow_mut().next();
+                })
+            }>
+        { "Next Animation" }
+        </button>
+
+        <button onclick={
+                let p = Rc::clone(&p);
+                Callback::from(move |_| {
+                    p.borrow_mut().next();
+                })
+            }>
+        { "Previous Animation" }
+        </button>
+
+        <button onclick={
+            Callback::from(|_| {
+                // yew::Renderer::<Menu>::new().render();
+            })
+        }>
+        { "Add Animation" }
+        </button>
+        </div>
+    }
+
+}
+
+#[derive(Properties, PartialEq)]
+pub struct PlayerProps {
+    pub name: String
+}
+
+#[function_component(Player)]
+pub fn player(props: &PlayerProps) -> Html {
+    html! {
+        <p> { "Currently playing: " } {*props.name} </p>
+    }
+}
