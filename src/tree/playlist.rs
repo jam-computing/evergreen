@@ -84,10 +84,6 @@ impl Playlist {
         }
     }
 
-    pub fn shuffle(&mut self) -> Self {
-        Playlist::new()
-    }
-
     pub fn add_many(&mut self, animations: Vec<Animation>) {
         self.queue.extend(animations);
     }
