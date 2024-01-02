@@ -1,6 +1,4 @@
-use super::animation::Animation;
 use super::playlist::Playlist;
-use std::sync::atomic::AtomicUsize;
 use std::sync::{Arc, Mutex};
 use std::thread::{self, JoinHandle};
 use std::time::Duration;
@@ -21,7 +19,7 @@ pub struct Animator {
 impl Animator {
     // This returns a new animation struct and starts the associated thread
     pub fn new(playlist_arc: Arc<Mutex<Playlist>>) -> Animator {
-        let a = Animator {
+        let mut a = Animator {
             playlist_arc: playlist_arc.clone(),
             thread_join_handle: None,
             frame_delay: Arc::new(Mutex::new(15)),
@@ -42,11 +40,7 @@ impl Animator {
             }
         });
 
+        a.thread_join_handle = Some(join_handle);
         a
     }
-}
-
-enum AnimatorState {
-    Playing,
-    Paused,
 }

@@ -1,11 +1,8 @@
 use crate::tree::playlist::Playlist;
 use crate::web::prelude::*;
-pub mod web;
 pub mod tree;
+pub mod web;
 
 fn main() {
-    let p = Playlist::new();
-    println!("");
-
-    // yew::Renderer::<app::App>::new().render();
+    yew::Renderer::<app::App>::new().render();
 }
