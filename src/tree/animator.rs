@@ -1,7 +1,4 @@
-use super::animation::Animation;
 use super::playlist::Playlist;
-use std::thread;
-use std::time::Duration;
 
 #[derive(Debug)]
 pub struct Animator {

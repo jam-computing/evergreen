@@ -1,11 +1,12 @@
 use crate::tree::playlist::Playlist;
-use crate::web::prelude::*;
 pub mod web;
 pub mod tree;
 
 fn main() {
-    let p = Playlist::new();
-    println!("");
-
+    println!("Name; {}", Playlist::instance().lock().unwrap().get_selected().unwrap().name);
+    Playlist::instance().lock().unwrap().next();
+    println!("Name; {}", Playlist::instance().lock().unwrap().get_selected().unwrap().name);
+    Playlist::instance().lock().unwrap().next();
+    println!("Name; {}", Playlist::instance().lock().unwrap().get_selected().unwrap().name);
     // yew::Renderer::<app::App>::new().render();
 }

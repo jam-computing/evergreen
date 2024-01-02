@@ -1,3 +1,4 @@
+use std::sync::{ Mutex, OnceLock };
 use super::animation::Animation;
 use serde::{Deserialize, Serialize};
 use std::fs;
@@ -5,11 +6,12 @@ use std::fs;
 const PLAYLIST_PATH: &str = "playlist.json";
 
 // The playlist should...
-// - Have a history
-// - Have an index which can change but is held within the struct
-// - Have a get current animation method
-// - Have an event that is called when it is updated
+// - Have a history | TICK
+// - Have an index which can change but is held within the struct | TICK
+// - Have a get current animation method | TICK
+// - Have an event that is called when it is updated | traits?
 // - Pause and play should be handled separately within the animator
+// - Shuffle method to create a new shuffled playlist
 
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -28,10 +30,27 @@ impl Playlist {
         p
     }
 
+    // Singleton instance of Playlist 
+    pub fn instance() -> &'static Mutex<Playlist> {
+        static PLAYLIST: OnceLock<Mutex<Playlist>> = OnceLock::new();
+        PLAYLIST.get_or_init(|| Mutex::new(Playlist::new()))
+    }
+
     pub fn read(&mut self) {
         let file = fs::read_to_string(PLAYLIST_PATH).unwrap();
-        let v: Vec<Animation> = serde_json::from_str(file.as_str()).unwrap();
-        self.queue = v;
+        let v: Playlist;
+        match serde_json::from_str(file.as_str()) {
+            Ok(val) => {
+                v = val;
+            },
+            Err(_) => {
+                v = Playlist {
+                    queue: Vec::new(),
+                    current: 0
+                }
+            }
+        }
+        self.queue = v.queue;
     }
 
     pub fn write(&self) -> std::io::Result<()> {
@@ -45,8 +64,11 @@ impl Playlist {
     }
 
     pub fn next(&mut self) {
-        if self.current < self.queue.len() {
+        if self.current < self.queue.len() - 1 {
             self.current += 1;
+        }
+        else {
+            self.current = 0;
         }
     }
 
@@ -54,5 +76,12 @@ impl Playlist {
         if self.current > 0 {
             self.current -= 1;
         }
+        else {
+            self.current = self.queue.len() - 1;
+        }
+    }
+
+    pub fn shuffle(&mut self) -> Self {
+        Playlist::new()
     }
 }
