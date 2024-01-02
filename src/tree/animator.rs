@@ -15,7 +15,7 @@ use std::time::Duration;
 pub struct Animator {
     pub playlist_arc: Arc<Mutex<Playlist>>,
     pub thread_join_handle: Option<JoinHandle<()>>,
-    pub frame_delay: Arc<Mutex<usize>>,
+    pub frame_delay: Arc<Mutex<u64>>,
 }
 
 impl Animator {
@@ -33,13 +33,13 @@ impl Animator {
 
         let join_handle = thread::spawn(move || {
             let current_playlist = thread_playlist_arc;
-            let frame_delay = frame_delay;
+            let current_frame_delay = frame_delay;
 
-            let frame_delay = loop {
-                thread::sleep(Duration::new(frame_delay.lock().unwrap()));
+            loop {
+                thread::sleep(Duration::from_millis(*current_frame_delay.lock().unwrap()));
 
                 // Display the animation on the tree here
-            };
+            }
         });
 
         a
