@@ -1,5 +1,8 @@
 use std::sync::{ Mutex, OnceLock };
+extern crate rand;
+
 use super::animation::Animation;
+use rand::seq::SliceRandom;
 use serde::{Deserialize, Serialize};
 use std::fs;
 
@@ -83,5 +86,22 @@ impl Playlist {
 
     pub fn shuffle(&mut self) -> Self {
         Playlist::new()
+    }
+
+    pub fn add_many(&mut self, animations: Vec<Animation>) {
+        self.queue.extend(animations);
+    }
+
+    pub fn add(&mut self, animation: Animation) {
+        self.queue.push(animation);
+    }
+
+    pub fn remove_at(&mut self, index: usize) {
+        self.queue.remove(index);
+    }
+
+    pub fn shuffle(&mut self) {
+        let mut rng = rand::thread_rng();
+        self.queue.shuffle(&mut rng);
     }
 }
