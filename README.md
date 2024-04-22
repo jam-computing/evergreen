@@ -1,10 +1,7 @@
 # Evergreen
 
-Web client for [Tree Lights](https://github.com/Friends-Robotics/tree-lights) Project.
+# Warning: Depreciated
 
-## Todo List
+This project currently sucks.
 
-- Look nice
-- Websocket connection
-- WS281x 
-- If running only rust, also interface with dekstop GUI? 
+Development on evergreen 2 is on branch _evergreen2-dev_
