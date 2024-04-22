@@ -1,5 +1,12 @@
-pub mod player;
+use crate::config::config::Config;
+
+mod config;
+mod player;
+mod server;
+mod tcp;
+mod log;
 
 fn main() {
-    println!("Hello, World!");
+    let config: Config = Config::get_from_file().expect("Could not read configuration from file");
+    server::server::start(&config);
 }
