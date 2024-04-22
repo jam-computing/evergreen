@@ -1,10 +1,14 @@
-# Evergreen
+# Evergreen ( 2 )
 
-Web client for [Tree Lights](https://github.com/Friends-Robotics/tree-lights) Project.
+* Tree Lights Project.
+* New and improved
+* Better than ever.
+* Rust.
+* Bam.
 
 ## Todo List
 
 - Look nice
 - Websocket connection
-- WS281x 
-- If running only rust, also interface with dekstop GUI? 
+- WS281x
+- If running only rust, also interface with dekstop GUI?
