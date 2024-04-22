@@ -6,9 +6,18 @@
 * Rust.
 * Bam.
 
+## What is Evergreen?
+
+Advanced software to control lights on a christmas tree.
+Spotify-Like UI.
+
 ## Todo List
 
-- Look nice
-- Websocket connection
-- WS281x
-- If running only rust, also interface with dekstop GUI?
+- Structure Packet.
+- Create Specification for an Animation.
+- Create Front-end media player {
+    * React - Next.js
+    * Database here prolly
+    * Send requests to server to play
+}
+- Actually play the animations on the pi with ws281x rust bindings
