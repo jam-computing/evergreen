@@ -3,7 +3,6 @@ use std::{io::{BufRead, BufReader, Write}, net::{TcpListener, TcpStream}};
 use crate::{config::config::Config, log::logger::{log, warn}, tcp::packet::{ProtocolCommand, ProtocolSpec}};
 
 pub fn start(config: &Config) {
-    log("Booting up server...");
     let listener: TcpListener;
     let bind_addr = format!("{}:{}", config.ip, config.port);
 
@@ -16,11 +15,11 @@ pub fn start(config: &Config) {
         }
     };
 
-    log(format!("Successfully bound to addr: \"{}:{}\"", config.ip, config.port).as_str());
+    log(format!("Server started on: {}", bind_addr).as_str());
 
     for stream in listener.incoming() {
-        let _stream = stream.unwrap();
-        println!("stream");
+        let stream = stream.unwrap();
+        handle_conn(stream);
     }
 }
 
