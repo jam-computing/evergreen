@@ -1,12 +1,15 @@
+use config::serverconf::ServerConfig;
+
 use crate::config::config::Config;
 
 mod config;
+mod log;
 mod player;
 mod server;
 mod tcp;
-mod log;
+mod tree;
 
 fn main() {
-    let config: Config = Config::get_from_file().expect("Could not read configuration from file");
-    server::server::start(&config);
+    let config: ServerConfig = ServerConfig::read_from_file();
+    server::server::start(config);
 }

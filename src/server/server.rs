@@ -1,8 +1,8 @@
 use std::{io::{BufRead, BufReader, Write}, net::{TcpListener, TcpStream}};
 
-use crate::{config::config::Config, log::logger::{log, warn}, tcp::packet::{ProtocolCommand, ProtocolSpec}};
+use crate::{config::{config::Config, serverconf::ServerConfig}, log::logger::{log, warn}, tcp::packet::{ProtocolCommand, ProtocolSpec}};
 
-pub fn start(config: &Config) {
+pub fn start(config: ServerConfig) {
     let listener: TcpListener;
     let bind_addr = format!("{}:{}", config.ip, config.port);
 
