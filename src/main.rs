@@ -10,6 +10,6 @@ mod tcp;
 mod tree;
 
 fn main() {
-    let config: ServerConfig = ServerConfig::read_from_file();
+    let config: ServerConfig = ServerConfig::read_from_file().expect("Could not read config file.");
     server::server::start(config);
 }

@@ -21,3 +21,10 @@ Spotify-Like UI.
     * Send requests to server to play
 }
 - Actually play the animations on the pi with ws281x rust bindings
+
+
+
+Protocol Spec:
+
+- Version | 1
+- Command | 1
