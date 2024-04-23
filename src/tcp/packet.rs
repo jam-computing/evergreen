@@ -1,28 +1,43 @@
+use crate::tcp::command;
+
 static PROTOCOL_VERSION: u8 = 1;
 
 // TODO: totes rename this
 // TODO: Restructure Protocl Spec
 
 #[allow(dead_code)]
-pub struct ProtocolSpec {
+pub struct ProtocolPacket {
     pub version: u8,
-    pub command: ProtocolCommand,
+    pub command: command::ProtocolCommand,
+    pub status: u16,
+    pub id: u16,
+    pub data: Option<String>
 }
 
 #[allow(dead_code)]
-impl ProtocolSpec {
+impl ProtocolPacket {
     pub fn new() -> Self {
         Self {
             version: PROTOCOL_VERSION,
-            command: ProtocolCommand::None,
+            command: command::ProtocolCommand::None,
+            status: 0,
+            id: 0,
+            data: None
         }
     }
 
-    pub fn command(command: ProtocolCommand) -> Self {
+    pub fn command(command: command::ProtocolCommand) -> Self {
         Self {
             version: PROTOCOL_VERSION,
-            command
+            command,
+            status: 0,
+            id: 0,
+            data: None
         }
+    }
+
+    pub fn add_data(&mut self, data: String) {
+        self.data = Some(data);
     }
 
     pub fn from(buf: &[u8]) -> Option<Self> {
@@ -33,7 +48,7 @@ impl ProtocolSpec {
             return None;
         }
 
-        packet.command = ProtocolCommand::from_byte(buf[1]);
+        packet.command = command::ProtocolCommand::from_byte(buf[1]);
 
         Some(packet)
     }
@@ -42,30 +57,7 @@ impl ProtocolSpec {
         let mut buf: Vec<u8> = Vec::new();
 
         buf.push(self.version);
-        buf.push(ProtocolCommand::to_byte(&self.command));
+        buf.push(command::ProtocolCommand::to_byte(&self.command));
         buf
-    }
-}
-
-#[allow(dead_code)]
-pub enum ProtocolCommand {
-    None,
-    Init,
-}
-
-#[allow(dead_code)]
-impl ProtocolCommand {
-    pub fn to_byte(&self) -> u8 {
-        match self {
-            ProtocolCommand::None => 0,
-            ProtocolCommand::Init => 1,
-        }
-    }
-
-    pub fn from_byte(b: u8) -> Self {
-        match b {
-            1 => ProtocolCommand::Init,
-            _ => ProtocolCommand::None,
-        }
     }
 }

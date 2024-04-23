@@ -1,6 +1,6 @@
 use std::{io::{BufRead, BufReader, Write}, net::{TcpListener, TcpStream}};
 
-use crate::{config::{config::Config, serverconf::ServerConfig}, log::logger::{log, warn}, tcp::packet::{ProtocolCommand, ProtocolSpec}};
+use crate::{config::serverconf::ServerConfig, log::logger::{log, warn}, tcp::{command::ProtocolCommand, packet::ProtocolPacket}};
 
 pub fn start(config: ServerConfig) {
     let listener: TcpListener;
@@ -37,7 +37,7 @@ fn handle_conn(mut stream: TcpStream) {
 
     log("Connection Received!!!!");
 
-    let protocol_packet: Option<ProtocolSpec> = ProtocolSpec::from(buf);
+    let protocol_packet: Option<ProtocolPacket> = ProtocolPacket::from(buf);
 
     if let None = protocol_packet {
         warn("A valid packet was not sent. Please ensure that you are using the correct version");
@@ -47,15 +47,15 @@ fn handle_conn(mut stream: TcpStream) {
     let packet = protocol_packet.unwrap();
 
     match packet.command {
-        ProtocolCommand::None => {},
-        ProtocolCommand::Init => handle_init(&mut stream, packet)
+        ProtocolCommand::Init => handle_init(&mut stream, packet),
+        _ => {},
     }
 }
 
-fn handle_init(stream: &mut TcpStream, _: ProtocolSpec) {
+fn handle_init(stream: &mut TcpStream, _: ProtocolPacket) {
 
     log("received health request");
-    let packet = ProtocolSpec::command(ProtocolCommand::None);
+    let packet = ProtocolPacket::command(ProtocolCommand::None);
 
     let binding = packet.into_bytes();
     let buf = &binding.as_slice();
