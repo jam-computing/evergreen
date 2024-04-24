@@ -1,10 +1,16 @@
+<div align="center">
+
 # Evergreen 2
 
-* Tree Lights Project.
-* New and improved
-* Better than ever.
-* Rust.
-* Bam.
+#### Christmas Tree Light Controller
+
+</div>
+
+* [What is Evergreen?](#-What-is-Evergreen)
+* [Project Structure](#-Project-Structure)
+* [Todo List](#-Todo-List)
+* [Protocol Spec](#-Protocol-Spec)
+
 
 ## What is Evergreen?
 
@@ -28,7 +34,7 @@ Spotify-Like UI.
 }
 [] Actually play the animations on the pi with ws281x rust bindings
 
-# *Protocol Spec:*
+## Protocol Spec
 
 Name      No. Bytes   Description
 
@@ -39,7 +45,7 @@ Name      No. Bytes   Description
 - Length    2           How long the data packet is
 - Data      Variable    Json data about the packet
 
-# *Command Reference:*
+## *Command Reference:*
 
 Name      Number
 

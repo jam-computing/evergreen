@@ -49,6 +49,14 @@ impl ProtocolPacket {
         }
 
         packet.command = command::ProtocolCommand::from_byte(buf[1]);
+        packet.status = u16::from_le_bytes([buf[2], buf[3]]);
+        packet.id = u16::from_le_bytes([buf[4], buf[5]]);
+        let data = String::from_utf8(buf[5..].to_vec());
+
+        packet.data = match data {
+            Ok(v) => Some(v),
+            Err(_) => None
+        };
 
         Some(packet)
     }
