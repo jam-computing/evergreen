@@ -27,18 +27,17 @@ Spotify-Like UI.
 
 - [ ] Structure Packet.
 - [ ] Create Specification for an Animation.
-- [ ] Create Front-end media player {
-    * React - Next.js
-    * Database here prolly
+- [ ] Create Front-end media player
+- [ ] React - Next.js
+- [ ] Database here prolly
     * Send requests to server to play
-}
 - [ ] Actually play the animations on the pi with ws281x rust bindings
 
 ## Protocol Spec
 
 Name      No. Bytes   Description
 
-- Version   1           The Protocol Version
+- Version   1           The Protocol stinky Version
 - Command   1           Usually signifies the what data will be contained in a packet
 - Status    2           The status code ( 200~ for success, 400~ for failure )
 - ID        2           The unique identifier of the client sending data, typically unimportant apart from setup
@@ -49,7 +48,7 @@ Name      No. Bytes   Description
 
 Name      Number
 
-- None      0
+- None      1
 - Init      1
 - Play      2
 - Pause     3

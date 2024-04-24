@@ -48,11 +48,14 @@ fn handle_conn(mut stream: TcpStream) {
 
     log("Packet was received");
 
-    match packet.command {
+    match &packet.command {
         ProtocolCommand::Init => handle_init(&mut stream, packet),
         ProtocolCommand::Play => handle_play(&mut stream, packet),
-        _ => {},
+        _ => {
+            log(format!("Received command: {}", packet.command.to_str()).as_str());
+        },
     }
+
 }
 
 fn handle_init(stream: &mut TcpStream, _: ProtocolPacket) {

@@ -46,4 +46,20 @@ impl ProtocolCommand {
             _ => ProtocolCommand::None,
         }
     }
+
+    pub fn to_str(&self) -> &str {
+        match self {
+            ProtocolCommand::None => "None",
+            ProtocolCommand::Init => "Init",
+            ProtocolCommand::Play => "Play",
+            ProtocolCommand::Pause => "Pause",
+            ProtocolCommand::Get => "Get",
+            ProtocolCommand::New => "New",
+            ProtocolCommand::On => "On",
+            ProtocolCommand::Off => "Off",
+            ProtocolCommand::OnRange => "On ( Range )",
+            ProtocolCommand::OffRange => "Off ( Range )",
+            ProtocolCommand::TreeData => "Tree Data",
+        }
+    }
 }

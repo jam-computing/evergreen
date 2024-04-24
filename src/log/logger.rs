@@ -10,7 +10,7 @@ pub fn log(msg: &str) {
 }
 
 pub fn warn(msg: &str) {
-    print_log(LogLevel::Info(msg.into()));
+    print_log(LogLevel::Warn(msg.into()));
 }
 
 fn print_log(level: LogLevel) {

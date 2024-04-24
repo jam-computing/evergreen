@@ -35,7 +35,7 @@ impl Config for ServerConfig {
         let conf: ServerConfig;
         match serde_json::from_str(&json) {
             Ok(v) => conf = v,
-            Err(e) => {
+            Err(_) => {
                 warn("Could not deserialize configuration file");
                 return None;
             }
