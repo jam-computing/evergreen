@@ -25,14 +25,14 @@ Spotify-Like UI.
 
 ## Todo List
 
-[] Structure Packet.
-[] Create Specification for an Animation.
-[] Create Front-end media player {
+[ ] Structure Packet.
+[ ] Create Specification for an Animation.
+[ ] Create Front-end media player {
     * React - Next.js
     * Database here prolly
     * Send requests to server to play
 }
-[] Actually play the animations on the pi with ws281x rust bindings
+[ ] Actually play the animations on the pi with ws281x rust bindings
 
 ## Protocol Spec
 
