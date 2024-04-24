@@ -59,3 +59,4 @@ Name      Number
 - OnRange   8
 - OffRange  9
 - TreeData  10
+- LedCount  11

@@ -51,11 +51,16 @@ fn handle_conn(mut stream: TcpStream) {
     match &packet.command {
         ProtocolCommand::Init => handle_init(&mut stream, packet),
         ProtocolCommand::Play => handle_play(&mut stream, packet),
+        ProtocolCommand::LedCount => handle_led_count(&mut stream, packet),
         _ => {
             log(format!("Received command: {}", packet.command.to_str()).as_str());
         },
     }
 
+}
+
+fn handle_led_count(stream: &mut TcpStream, packet: ProtocolPacket) {
+    todo!()
 }
 
 fn handle_init(stream: &mut TcpStream, _: ProtocolPacket) {
