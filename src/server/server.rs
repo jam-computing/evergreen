@@ -35,8 +35,6 @@ fn handle_conn(mut stream: TcpStream) {
         }
     }
 
-    log("Connection Received!!!!");
-
     let protocol_packet: Option<ProtocolPacket> = ProtocolPacket::from(buf);
 
     if let None = protocol_packet {
@@ -45,31 +43,25 @@ fn handle_conn(mut stream: TcpStream) {
     }
 
     let packet = protocol_packet.unwrap();
-
-    log("Packet was received");
+    log(format!("Received command: {}", packet.command.to_str()).as_str());
 
     match &packet.command {
         ProtocolCommand::Init => handle_init(&mut stream, packet),
-        ProtocolCommand::Play => handle_play(&mut stream, packet),
         ProtocolCommand::LedCount => handle_led_count(&mut stream, packet),
-        _ => {
-            log(format!("Received command: {}", packet.command.to_str()).as_str());
-        },
+        _ => {},
     }
 
 }
 
-fn handle_led_count(stream: &mut TcpStream, packet: ProtocolPacket) {
-    todo!()
-}
+fn handle_led_count(stream: &mut TcpStream, _: ProtocolPacket) {
+    let mut packet = ProtocolPacket::command(ProtocolCommand::LedCount);
 
-fn handle_init(stream: &mut TcpStream, _: ProtocolPacket) {
-    log("received health request");
-    let packet = ProtocolPacket::command(ProtocolCommand::None);
+    // Make DB call, Marsall to json
+
+    packet.add_data("test".into());
 
     let binding = packet.into_bytes();
     let buf = &binding.as_slice();
-
     let result = stream.write_all(buf);
 
     if let Err(_) = result {
@@ -77,13 +69,7 @@ fn handle_init(stream: &mut TcpStream, _: ProtocolPacket) {
     }
 }
 
-fn handle_play(stream: &mut TcpStream, packet: ProtocolPacket) {
-    log("received play!");
-
-    if let Some(s) = packet.data {
-        log(format!("Received data: {}", s).as_str());
-    }
-
+fn handle_init(stream: &mut TcpStream, _: ProtocolPacket) {
     let packet = ProtocolPacket::command(ProtocolCommand::None);
 
     let binding = packet.into_bytes();

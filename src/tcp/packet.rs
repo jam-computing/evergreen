@@ -11,7 +11,7 @@ pub struct ProtocolPacket {
     pub command: command::ProtocolCommand,
     pub status: u16,
     pub id: u16,
-    pub data: Option<String>
+    pub data: Option<String>,
 }
 
 #[allow(dead_code)]
@@ -22,7 +22,7 @@ impl ProtocolPacket {
             command: command::ProtocolCommand::None,
             status: 0,
             id: 0,
-            data: None
+            data: None,
         }
     }
 
@@ -32,7 +32,7 @@ impl ProtocolPacket {
             command,
             status: 0,
             id: 0,
-            data: None
+            data: None,
         }
     }
 
@@ -41,10 +41,6 @@ impl ProtocolPacket {
     }
 
     pub fn from(buf: &[u8]) -> Option<Self> {
-        for b in buf {
-            println!("byte: {}", b);
-        }
-
         let mut packet: Self = Self::new();
         packet.version = buf[0];
 
@@ -59,7 +55,7 @@ impl ProtocolPacket {
 
         packet.data = match data {
             Ok(v) => Some(v),
-            Err(_) => None
+            Err(_) => None,
         };
 
         Some(packet)
@@ -70,6 +66,17 @@ impl ProtocolPacket {
 
         buf.push(self.version);
         buf.push(command::ProtocolCommand::to_byte(&self.command));
+        buf.extend_from_slice(&self.status.to_le_bytes());
+        buf.extend_from_slice(&self.id.to_le_bytes());
+
+        if let Some(s) = &self.data {
+            buf.extend_from_slice(&(s.len() as u16).to_le_bytes());
+            buf.extend_from_slice(s.as_bytes());
+        } else {
+            let len: u16 = 0;
+            buf.extend_from_slice(&len.to_le_bytes());
+        }
+
         buf
     }
 }

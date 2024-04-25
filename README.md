@@ -48,7 +48,7 @@ Name      No. Bytes   Description
 
 Name      Number
 
-- None      1
+- None      0
 - Init      1
 - Play      2
 - Pause     3
