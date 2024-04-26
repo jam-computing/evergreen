@@ -1,6 +1,6 @@
 use std::{io::{BufRead, BufReader, Write}, net::{TcpListener, TcpStream}};
 
-use crate::{config::serverconf::ServerConfig, log::logger::{log, warn}, tcp::{command::ProtocolCommand, packet::ProtocolPacket}};
+use crate::{config::serverconf::ServerConfig, log::logger::{log, warn}, player::animation::Animation, tcp::{command::ProtocolCommand, packet::ProtocolPacket}};
 
 pub fn start(config: ServerConfig) {
     let listener: TcpListener;
@@ -58,7 +58,12 @@ fn handle_led_count(stream: &mut TcpStream, _: ProtocolPacket) {
 
     // Make DB call, Marsall to json
 
-    packet.add_data("test".into());
+    let a: Animation = Animation::from(Vec::new());
+    let json = serde_json::to_string(&a);
+
+    if let Ok(s) = json {
+        packet.add_data(s);
+    }
 
     let binding = packet.into_bytes();
     let buf = &binding.as_slice();

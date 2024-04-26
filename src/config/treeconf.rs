@@ -9,6 +9,7 @@ use super::config::Config;
 #[derive(Serialize, Deserialize)]
 pub struct TreeConfig {
     pub name: String,
+    pub led_locations: (u8, u8, u8) // Normalised 0 and 1
 }
 
 impl Config for TreeConfig {
