@@ -30,7 +30,7 @@ impl ProtocolPacket {
         Self {
             version: PROTOCOL_VERSION,
             command,
-            status: 0,
+            status: 200,
             id: 0,
             data: None,
         }

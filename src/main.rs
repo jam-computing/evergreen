@@ -3,6 +3,7 @@ use config::serverconf::ServerConfig;
 use crate::config::config::Config;
 
 mod config;
+mod db;
 mod log;
 mod player;
 mod server;

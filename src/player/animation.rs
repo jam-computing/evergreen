@@ -2,7 +2,7 @@
 
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct Animation {
-    pub name: String,
+    pub title: String,
     pub artist: String,
     pub tick_rate: u16,
     pub frames: Vec<Vec<(u8, u8, u8)>>,
@@ -11,8 +11,8 @@ pub struct Animation {
 impl Animation {
     pub fn from(frames: Vec<Vec<(u8, u8, u8)>>) -> Self {
         Self {
-            name: "Super Cool Animation".into(),
-            artist: "Super Cool Artiest".into(),
+            title: "Super Cool Animation".into(),
+            artist: "Super Cool Artist".into(),
             tick_rate: 50 as u16,
             frames
         }
