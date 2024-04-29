@@ -2,8 +2,6 @@ extern crate chrono;
 
 use chrono::Local;
 
-use std::time::SystemTime;
-
 use colored::Colorize;
 
 enum LogLevel {

@@ -1,6 +1,15 @@
-use std::{io::{BufRead, BufReader, Write}, net::{TcpListener, TcpStream}};
+use std::{
+    io::{BufRead, BufReader, Write},
+    net::{TcpListener, TcpStream},
+};
 
-use crate::{config::serverconf::ServerConfig, db::db::make_animation_request, log::logger::{log, warn}, player::animation::Animation, tcp::{command::ProtocolCommand, packet::ProtocolPacket}};
+use crate::{
+    config::serverconf::ServerConfig,
+    db::db::make_animation_request,
+    log::logger::{log, warn},
+    player::{animation::Animation, playable::Playable},
+    tcp::{command::ProtocolCommand, packet::ProtocolPacket},
+};
 
 pub fn start(config: ServerConfig) {
     let listener: TcpListener;
@@ -49,9 +58,8 @@ fn handle_conn(mut stream: TcpStream) {
         ProtocolCommand::Init => handle_init(&mut stream, packet),
         ProtocolCommand::Play => handle_play(&mut stream, packet),
         ProtocolCommand::LedCount => handle_led_count(&mut stream, packet),
-        _ => {},
+        _ => {}
     }
-
 }
 
 fn handle_led_count(stream: &mut TcpStream, _: ProtocolPacket) {
@@ -59,12 +67,7 @@ fn handle_led_count(stream: &mut TcpStream, _: ProtocolPacket) {
 
     // Make DB call, Marsall to json
 
-    let a: Animation = Animation::from(Vec::new());
-    let json = serde_json::to_string(&a);
-
-    if let Ok(s) = json {
-        packet.add_data(s);
-    }
+    packet.add_data("2".into());
 
     let binding = packet.into_bytes();
     let buf = &binding.as_slice();
@@ -88,24 +91,44 @@ fn handle_init(stream: &mut TcpStream, _: ProtocolPacket) {
     }
 }
 
-
 fn handle_play(stream: &mut TcpStream, recv_packet: ProtocolPacket) {
-    let packet = ProtocolPacket::command(ProtocolCommand::None);
+    let mut packet = ProtocolPacket::command(ProtocolCommand::None);
 
     let title: String = match recv_packet.data {
         Some(v) => v,
-        None => "".into()
+        None => "".into(),
     };
 
-    let _ = make_animation_request("One".into());
+    println!("title is: {}", title);
 
-    println!("Received Play Animation");
+    let ani_req = make_animation_request(title);
 
-    // let url = format!("https://localhost:8090/api/collections/Animations/records?Title={}", title);
+    if let Err(err) = ani_req {
+        packet.status = 500;
+        packet.data = Some("Error parsing json".into());
+        println!("{}", err);
+        let binding = packet.into_bytes();
+        let buf = &binding.as_slice();
+        let _ = stream.write_all(buf);
+        return;
+    }
 
+    if let None = ani_req.as_ref().unwrap() {
+        packet.status = 500;
+        packet.data = Some("Error Querying DB".into());
+        println!("Error Querying DB");
+        let binding = packet.into_bytes();
+        let buf = &binding.as_slice();
+        let _ = stream.write_all(buf);
+        return;
+    }
+
+    let animation = ani_req.unwrap().unwrap();
+    animation.play();
+
+    packet.data = Some("Success!".into());
     let binding = packet.into_bytes();
     let buf = &binding.as_slice();
-
     let result = stream.write_all(buf);
 
     if let Err(_) = result {
