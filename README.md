@@ -14,8 +14,9 @@
 
 ## What is Evergreen?
 
-Advanced software to control lights on a christmas tree.
-Spotify-Like UI.
+Evergreen is the backend for the [Tree Lights Project]().
+
+Pairs with [Willow] for gui communication
 
 ## Project Structure
 
@@ -27,10 +28,15 @@ Spotify-Like UI.
 
 - [x] Structure Packet.
 - [x] Create Specification for an Animation.
-- [ ] Create Front-end media player
+- [x] Create Front-end media player
 - [x] Go + HTMX
 - [x] Database here prolly
 - [ ] Actually play the animations on the pi with ws281x rust bindings
+- [ ] Add feautures to front end
+- [ ] Create tree features
+- [ ] Add tree to database
+- [ ] Define specification for frames
+- [ ] Animation should spawn new thread and loop
 
 ## Protocol Spec
 
@@ -59,3 +65,7 @@ Name      Number
 - OffRange  9
 - TreeData  10
 - LedCount  11
+
+## Frame List Spec
+
+!TODO
