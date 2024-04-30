@@ -25,12 +25,11 @@ Spotify-Like UI.
 
 ## Todo List
 
-- [ ] Structure Packet.
-- [ ] Create Specification for an Animation.
+- [x] Structure Packet.
+- [x] Create Specification for an Animation.
 - [ ] Create Front-end media player
-- [ ] Go + HTMX
-- [ ] Database here prolly
-- [ ] Send requests to server to play
+- [x] Go + HTMX
+- [x] Database here prolly
 - [ ] Actually play the animations on the pi with ws281x rust bindings
 
 ## Protocol Spec

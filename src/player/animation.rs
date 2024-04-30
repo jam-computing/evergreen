@@ -6,20 +6,28 @@ use super::playable::Playable;
 pub struct Animation {
     #[serde(rename = "Title")]
     pub title: String,
+
     #[serde(rename = "Artist")]
     pub artist: String,
-    #[serde(rename = "Frames")]
-    pub frames: Option<String>,
+
     #[serde(rename = "Tick_Rate")]
     pub tick_rate: u32,
+
+    #[serde(rename = "Frames")] // JSOn
+    pub frames: Option<String>,
+
     #[serde(rename = "collectionId")]
     pub collection_id: String,
+
     #[serde(rename = "collectionName")]
     pub collection_name: String,
+
     #[serde(rename = "created")]
     pub created: String,
+
     #[serde(rename = "id")]
     pub id: String,
+
     #[serde(rename = "updated")]
     pub updated: String,
 }
@@ -40,7 +48,7 @@ impl Animation {
             frames: None,
             id: "".into(),
             tick_rate: 0,
-            updated: "".into()
+            updated: "".into(),
         }
     }
 }

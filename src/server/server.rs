@@ -5,9 +5,9 @@ use std::{
 
 use crate::{
     config::serverconf::ServerConfig,
-    db::db::make_animation_request,
+    db::db::{get_all_animations, make_animation_request},
     log::logger::{log, warn},
-    player::{animation::Animation, playable::Playable},
+    player::playable::Playable,
     tcp::{command::ProtocolCommand, packet::ProtocolPacket},
 };
 
@@ -58,13 +58,58 @@ fn handle_conn(mut stream: TcpStream) {
         ProtocolCommand::Init => handle_init(&mut stream, packet),
         ProtocolCommand::Play => handle_play(&mut stream, packet),
         ProtocolCommand::LedCount => handle_led_count(&mut stream, packet),
+        ProtocolCommand::Get => handle_get(&mut stream, packet),
         _ => {}
+    }
+}
+
+fn handle_get(stream: &mut TcpStream, _: ProtocolPacket) {
+    let mut response = ProtocolPacket::command(ProtocolCommand::Get);
+
+    let animations_req = get_all_animations();
+
+    if let Err(err) = animations_req {
+        response.status = 500;
+        response.data = Some("Error parsing json".into());
+        println!("{}", err);
+        let binding = response.into_bytes();
+        let buf = &binding.as_slice();
+        let _ = stream.write_all(buf);
+        return;
+    }
+
+    if animations_req.as_ref().unwrap().is_empty() {
+        response.status = 500;
+        response.data = Some("Error Querying DB".into());
+        println!("Error Querying DB");
+        let binding = response.into_bytes();
+        let buf = &binding.as_slice();
+        let _ = stream.write_all(buf);
+        return;
+    }
+
+    let animations = animations_req.unwrap();
+
+    let json = serde_json::to_string(&animations);
+
+    response.data = match json {
+        Ok(v) => Some(v),
+        Err(_) => None
+    };
+
+    let binding = response.into_bytes();
+    let buf = &binding.as_slice();
+    let result = stream.write_all(buf);
+
+    if let Err(_) = result {
+        warn("data not sent successfully")
     }
 }
 
 fn handle_led_count(stream: &mut TcpStream, _: ProtocolPacket) {
     let mut packet = ProtocolPacket::command(ProtocolCommand::LedCount);
 
+    // TODO:
     // Make DB call, Marsall to json
 
     packet.add_data("2".into());
