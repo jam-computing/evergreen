@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate lazy_static;
+
 use config::serverconf::ServerConfig;
 
 use crate::config::config::Config;
