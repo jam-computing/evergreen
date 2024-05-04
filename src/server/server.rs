@@ -62,6 +62,7 @@ fn handle_conn(mut stream: TcpStream) {
         ProtocolCommand::Init => handle_init(&mut stream, meta),
         ProtocolCommand::Get => handle_get(&mut stream, meta),
         ProtocolCommand::LedCount => handle_led_count(&mut stream, meta),
+        ProtocolCommand::Blank => handle_blank(&mut stream, meta),
         _ => {
             let second_buf: &[u8];
             match buf_reader.fill_buf() {
@@ -233,6 +234,22 @@ fn handle_play(stream: &mut TcpStream, recv_packet: ProtocolPacketData) {
     }
 
     if let Err(_) = meta_res {
+        warn("data not sent successfully")
+    }
+}
+
+
+fn handle_blank(stream: &mut TcpStream, _: ProtocolPacketMetadata) {
+    let packet = ProtocolPacketMetadata::command(ProtocolCommand::None);
+
+    log("Blank command received");
+
+    let binding = packet_to_bytes(&packet, None).0;
+    let buf = &binding.as_slice();
+
+    let result = stream.write_all(buf);
+
+    if let Err(_) = result {
         warn("data not sent successfully")
     }
 }

@@ -17,7 +17,7 @@ impl Config for TreeConfig {
         let mut file: File;
         match File::open("treeconfig.json") {
             Ok(v) => file = v,
-            Err(e) => {
+            Err(_) => {
                 warn("Could not read treeconfig.json. It may be being used in another process.");
                 return None;
             }
@@ -34,7 +34,7 @@ impl Config for TreeConfig {
 
         match serde_json::from_str(&json) {
             Ok(v) => conf = v,
-            Err(e) => {
+            Err(_) => {
                 warn("Could not deserialize treeconfig.json. Please check that there is valid json in the file");
                 return None;
             }

@@ -40,6 +40,7 @@ Pairs with [Willow] for gui communication
 - [ ] Write a string to tree
 - [ ] Fix tree light request message
 - [ ] Fix naming issue with handle_*
+- [ ] Description to protocol
 
 ## Language spec ideas
 
@@ -48,47 +49,6 @@ Pairs with [Willow] for gui communication
 - [ ] Tick rate support
 
 ## Protocol Spec
-
-Name      No. Bytes   Description
-
-- Version   1           The Protocol stinky Version
-- ID        2           The unique identifier of the client sending data, typically unimportant apart from setup
-- Command   1           Usually signifies the what data will be contained in a packet
-- Status    2           The status code ( 200~ for success, 400~ for failure )
-- Length    2           How long the data packet is
-- Data      Variable    Json data about the packet
-
-## *Command Reference:*
-
-Name      Number
-
-- None      0
-- Init      1
-- Play      2
-- Pause     3
-- Get       4
-- New       5
-- On        6
-- Off       7
-- OnRange   8
-- OffRange  9
-- TreeData  10
-- LedCount  11
-- ClearTree 12
-
-## Frame List Spec
-
-!TODO
-
-
-
-
-### PACKET SPEC VERSION 2
-
-###### Two packets this time !
-
-* Packet One - Metadata
-* Packet Two - Data
 
 #### Packet One
 
@@ -103,3 +63,32 @@ Name      Number
 - ID | 2B
 - Version | 1B
 - Data | Variable Length
+
+## *Command Reference:*
+
+- None      0
+- Init      1
+- Play      2
+- Pause     3
+- Get       4
+- New       5
+- On        6
+- Off       7
+- OnRange   8
+- OffRange  9
+- TreeData  10
+- LedCount  11
+- ClearTree 12
+- Blank 13
+
+## Frame List Spec
+
+!TODO
+
+### PACKET SPEC VERSION 2
+
+###### Two packets this time !
+
+* Packet One - Metadata
+* Packet Two - Data
+

@@ -12,7 +12,8 @@ pub enum ProtocolCommand {
     OffRange,
     TreeData,
     LedCount,
-    ClearTree
+    ClearTree,
+    Blank,
 }
 
 #[allow(dead_code)]
@@ -32,6 +33,7 @@ impl ProtocolCommand {
             ProtocolCommand::TreeData => 10,
             ProtocolCommand::LedCount => 11,
             ProtocolCommand::ClearTree => 12,
+            ProtocolCommand::Blank => 13,
         }
     }
 
@@ -49,6 +51,7 @@ impl ProtocolCommand {
             10 => ProtocolCommand::TreeData,
             11 => ProtocolCommand::LedCount,
             12 => ProtocolCommand::ClearTree,
+            13 => ProtocolCommand::Blank,
             _ => ProtocolCommand::None,
         }
     }
@@ -68,6 +71,7 @@ impl ProtocolCommand {
             ProtocolCommand::TreeData => "Tree Data",
             ProtocolCommand::LedCount => "Led Count",
             ProtocolCommand::ClearTree => "Clear Tree",
+            ProtocolCommand::Blank => "Blank",
         }
     }
 }
