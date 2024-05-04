@@ -3,7 +3,6 @@ use std::error::Error;
 use crate::{db::view_request::ViewRequest, player::animation::Animation};
 
 pub fn make_animation_request(title: String) -> Result<Option<Animation>, Box<dyn Error>> {
-
     let animations = get_all_animations()?;
 
     let matching = animations
@@ -26,8 +25,8 @@ pub fn get_all_animations() -> Result<Vec<Animation>, Box<dyn Error>> {
         let view: ViewRequest = ViewRequest::from(&body)?;
         let animations: Vec<Animation> = view.items;
 
-        for a in &animations {
-            println!("Found animation, {}: ID: {}", a.title, a.id);
+        for _a in &animations {
+            // println!("Found animation, {}: ID: {}", a.title, a.id);
         }
 
         return Ok(animations);

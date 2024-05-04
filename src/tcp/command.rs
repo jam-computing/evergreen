@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub enum ProtocolCommand {
     None,
     Init,
@@ -10,7 +11,8 @@ pub enum ProtocolCommand {
     OnRange,
     OffRange,
     TreeData,
-    LedCount
+    LedCount,
+    ClearTree
 }
 
 #[allow(dead_code)]
@@ -29,6 +31,7 @@ impl ProtocolCommand {
             ProtocolCommand::OffRange => 9,
             ProtocolCommand::TreeData => 10,
             ProtocolCommand::LedCount => 11,
+            ProtocolCommand::ClearTree => 12,
         }
     }
 
@@ -45,6 +48,7 @@ impl ProtocolCommand {
             9 => ProtocolCommand::OffRange,
             10 => ProtocolCommand::TreeData,
             11 => ProtocolCommand::LedCount,
+            12 => ProtocolCommand::ClearTree,
             _ => ProtocolCommand::None,
         }
     }
@@ -63,6 +67,7 @@ impl ProtocolCommand {
             ProtocolCommand::OffRange => "Off ( Range )",
             ProtocolCommand::TreeData => "Tree Data",
             ProtocolCommand::LedCount => "Led Count",
+            ProtocolCommand::ClearTree => "Clear Tree",
         }
     }
 }

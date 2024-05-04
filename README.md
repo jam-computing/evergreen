@@ -39,6 +39,7 @@ Pairs with [Willow] for gui communication
 - [ ] Animation should spawn new thread and loop
 - [ ] Write a string to tree
 - [ ] Fix tree light request message
+- [ ] Fix naming issue with handle_*
 
 ## Language spec ideas
 
@@ -73,6 +74,7 @@ Name      Number
 - OffRange  9
 - TreeData  10
 - LedCount  11
+- ClearTree 12
 
 ## Frame List Spec
 

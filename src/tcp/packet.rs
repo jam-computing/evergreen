@@ -8,7 +8,7 @@ static PROTOCOL_VERSION: u8 = 2;
 // TODO: Restructure Protocl Spec
 trait Packet {}
 
-#[allow(dead_code)]
+#[derive(Clone)]
 pub struct ProtocolPacketMetadata {
     pub version: u8,
     pub id: u16,
