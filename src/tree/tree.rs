@@ -1,7 +1,9 @@
-use crate::player::playable::Playable;
+use crate::{db::db_item::DbItem, player::playable::Playable};
 
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct Tree {
-
+    pub name: String,
+    pub frames: Option<String>
 }
 
 impl Tree {
@@ -12,3 +14,5 @@ impl Tree {
 
     }
 }
+
+impl DbItem for Tree {}

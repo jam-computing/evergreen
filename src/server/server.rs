@@ -84,6 +84,7 @@ fn handle_conn(mut stream: TcpStream) {
 
             match meta.command {
                 ProtocolCommand::Play => handle_play(&mut stream, data),
+                ProtocolCommand::TreeStr => handle_tree_str(&mut stream, data),
                 _ => {}
             }
         }
@@ -125,10 +126,7 @@ fn handle_get(stream: &mut TcpStream, _: ProtocolPacketMetadata) {
     let json = serde_json::to_string(&animations);
 
     let data = match json {
-        Ok(v) => {
-            // println!("{}", v);
-            v
-        }
+        Ok(v) => v,
         Err(_) => String::new(),
     };
 
@@ -239,7 +237,6 @@ fn handle_play(stream: &mut TcpStream, recv_packet: ProtocolPacketData) {
     }
 }
 
-
 fn handle_blank(stream: &mut TcpStream, _: ProtocolPacketMetadata) {
     let packet = ProtocolPacketMetadata::command(ProtocolCommand::None);
 
@@ -252,5 +249,26 @@ fn handle_blank(stream: &mut TcpStream, _: ProtocolPacketMetadata) {
 
     if let Err(_) = result {
         warn("data not sent successfully")
+    }
+}
+
+
+fn handle_tree_str(stream: &mut TcpStream, recv: ProtocolPacketData) {
+    let packet = ProtocolPacketMetadata::command(ProtocolCommand::None);
+    log("Tree Str command received");
+
+    let _data = recv.data;
+
+    // Get current tree
+    // Play on current tree
+
+    let binding = packet_to_bytes(&packet, None).0;
+    let buf = &binding.as_slice();
+
+
+    let result = stream.write_all(buf);
+
+    if let Err(_) = result {
+        warn("Data not sent succesfully");
     }
 }

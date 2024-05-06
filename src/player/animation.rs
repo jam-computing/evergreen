@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+use crate::db::db_item::DbItem;
+
 use super::playable::Playable;
 
 #[derive(serde::Serialize, serde::Deserialize, Debug, Clone)]
@@ -62,3 +64,5 @@ impl Playable for Animation {
         println!("Paused Animation: {}", self.title);
     }
 }
+
+impl DbItem for Animation {}

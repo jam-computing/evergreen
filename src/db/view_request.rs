@@ -1,8 +1,10 @@
 use crate::player::animation::Animation;
 use serde::{Deserialize, Serialize};
 
+use super::db_item::DbItem;
+
 #[derive(Serialize, Deserialize, Debug)]
-pub struct ViewRequest {
+pub struct ViewRequest<T> where T: DbItem {
     #[serde(rename = "page")]
     pub page: u32,
     #[serde(rename = "perPage")]
@@ -15,9 +17,9 @@ pub struct ViewRequest {
     pub items: Vec<Animation>,
 }
 
-impl ViewRequest {
-    pub fn from(json: &str) -> serde_json::Result<Self> {
-        let view: ViewRequest = serde_json::from_str(json)?;
+impl<T> ViewRequest<T>  where T: DbItem{
+     fn from(json: &str) -> serde_json::Result<T> {
+        let view: ViewRequest<T> = serde_json::from_str(json)?;
         Ok(view)
     }
 }
