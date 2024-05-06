@@ -79,7 +79,8 @@ Pairs with [Willow] for gui communication
 - TreeData  10
 - LedCount  11
 - ClearTree 12
-- Blank 13
+- Blank     13
+- TreeStr   14
 
 ## Frame List Spec
 

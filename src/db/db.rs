@@ -24,11 +24,6 @@ pub fn get_all_animations() -> Result<Vec<Animation>, Box<dyn Error>> {
         let body = resp.text()?;
         let view: ViewRequest = ViewRequest::from(&body)?;
         let animations: Vec<Animation> = view.items;
-
-        for _a in &animations {
-            // println!("Found animation, {}: ID: {}", a.title, a.id);
-        }
-
         return Ok(animations);
     }
 

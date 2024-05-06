@@ -53,6 +53,7 @@ fn handle_conn(mut stream: TcpStream) {
             warn("Could not marshall bytes into metadata");
             return;
         }
+
         meta = metadata.unwrap();
     }
 
