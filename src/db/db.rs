@@ -1,6 +1,8 @@
 use std::error::Error;
 
-use crate::{db::view_request::ViewRequest, player::animation::Animation, tree::tree::Tree};
+use crate::{db::view_request::ViewAnimationRequest, player::animation::Animation, tree::tree::Tree};
+
+use super::view_request::ViewTreeRequest;
 
 pub fn make_animation_request(title: String) -> Result<Option<Animation>, Box<dyn Error>> {
     let animations = get_all_animations()?;
@@ -22,7 +24,7 @@ pub fn get_all_animations() -> Result<Vec<Animation>, Box<dyn Error>> {
         println!("Could not find record");
     } else {
         let body = resp.text()?;
-        let view: ViewRequest = ViewRequest::from(&body)?;
+        let view: ViewAnimationRequest = ViewAnimationRequest::from(&body)?;
         let animations: Vec<Animation> = view.items;
         return Ok(animations);
     }
@@ -39,7 +41,7 @@ pub fn get_all_trees() -> Result<Vec<Tree>, Box<dyn Error>> {
         println!("Could not find record");
     } else {
         let body = resp.text()?;
-        let view: ViewRequest = ViewRequest::from(&body)?;
+        let view: ViewTreeRequest = ViewTreeRequest::from(&body)?;
         let trees: Vec<Tree> = view.items;
         return Ok(trees);
     }
